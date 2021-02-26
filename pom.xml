@@ -61,14 +61,11 @@
 </dependency>
 		
         <!--Oracle database driver -->
-       <dependency>
-            <groupId>ojdbc7-12.1.0.jar</groupId>
-            <artifactId>ojdbc7-12.1.0.jar</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>C:/Tools/Extlib/ojdbc7-12.1.0.jar</systemPath>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0</version>
         </dependency>
-
      
         <!-- For API documentation -->
         <dependency>
