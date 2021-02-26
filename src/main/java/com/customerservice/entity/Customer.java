@@ -1,22 +1,39 @@
 package com.customerservice.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "CUST_TABLE")
+@EntityListeners(AuditingEntityListener.class)
 public class Customer {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(notes = "Unique identifier of the Customer.", example = "1", required = true, position = 0)
     private Integer id;
 
-    @Column(name = "First_Name", nullable = false, length = 10)
+    @NotBlank
+	@NotNull
+    @Column(name = "First_Name", nullable = false)
+    @Pattern(regexp = "^[a-zA-Z]{5,10}", message = "length between 5 and 10")
+	@ApiModelProperty(notes = "Customer first Name", example = "Agilan", required = true, position = 1)
+	@Size(max = 10, min = 5)
     private String firstName;
 
-    @Column(name = "Last_Name", nullable = false, length = 10)
+    @NotBlank
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z]{5,10}", message = "length between 5 and 10")
+	@ApiModelProperty(notes = "Customer Last Name", example = "S", required = true, position = 2)
+	@Size(max = 10, min = 5)
+    @Column(name = "Last_Name", nullable = false)
     private String lastName;
 	
 	@Column(name = "Gender", nullable = true, length = 10)
@@ -27,6 +44,14 @@ public class Customer {
 	
 	@Column(name = "PhoneNumber", nullable = true, length = 10)
     private Integer phoneNumber;
+
+	public Customer(String firstName, String lastName, String gender, int age, int phoneNumber) {
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.gender = gender;
+			this.age = age;
+			this.phoneNumber = phoneNumber;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -70,6 +95,10 @@ public class Customer {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+    
+    public Integer getId() {
+		return id;
 	}
    
     @Override
